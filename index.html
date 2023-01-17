@@ -536,7 +536,9 @@ body {
                 var det = now - start;
                 now.setTime(det);
                 now.setHours(0);
-                data.uesdTime = now.toLocaleTimeString();
+                data.uesdTime = JSON.stringify(now.getHours()).padStart(2, 0) +
+                    ':' + JSON.stringify(now.getMinutes()).padStart(2, 0) +
+                    ':' + JSON.stringify(now.getSeconds()).padStart(2, 0) ;
             }
 
             const answer = (c) => {
