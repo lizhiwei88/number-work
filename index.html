@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maixmum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <title>算数加减法</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-plus"></script>
+</head>
+<style>
+/*公共样式--开始*/
+html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input, textarea, th, td, select {
+    margin: 0;
+    padding: 0;
+}
+*{box-sizing: border-box;}
+html, body {
+    min-height: 100%;
+}
+
+body {
+    font-family: "Microsoft YaHei";
+    font-size:14px;
+    color:#333;
+}
+h1, h2, h3, h4, h5, h6{font-weight:normal;}
+ul,ol {
+    list-style: none;
+}
+
+img {
+    border: none;
+    vertical-align: middle;
+}
+
+a {
+    text-decoration: none;
+    color: #232323;
+}
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+input, textarea {
+    outline: none;
+    border: none;
+}
+
+textarea {
+    resize: none;
+    overflow: auto;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+.clearfix:after {
+    content: ".";
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    display: block;
+    clear: both;
+    overflow:hidden;
+}
+
+.fl {
+    float: left
+}
+
+.fr {
+    float: right
+}
+
+.tl {
+    text-align: left;
+}
+
+.tc {
+    text-align: center
+}
+
+.tr {
+    text-align: right;
+}
+
+.ellipse {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.inline{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+
+body {
+    font-size: 18px;
+}
+@media only screen and (max-width: 300px) {
+    body {
+        font-size: 16.666666px;
+    }
+    .viewport {
+        max-width: 300px;
+    }
+}
+@media only screen and (max-width: 310px) and (min-width: 300px) {
+    body {
+        font-size: 16.666666px;
+    }
+    .viewport {
+        max-width: 310px;
+    }
+}
+@media only screen and (max-width: 320px) and (min-width: 310px) {
+    body {
+        font-size: 17.22222px;
+    }
+    .viewport {
+        max-width: 320px;
+    }
+}
+@media only screen and (max-width: 350px) and (min-width: 320px) {
+    body {
+        font-size: 17.77778px;
+    }
+    .viewport {
+        max-width: 350px;
+    }
+}
+@media only screen and (max-width: 360px) and (min-width: 350px) {
+    body {
+        font-size: 19.44444px;
+    }
+    .viewport {
+        max-width: 360px;
+    }
+}
+@media only screen and (max-width: 400px) and (min-width: 360px) {
+    body {
+        font-size: 20px;
+    }
+    .viewport {
+        max-width: 400px;
+    }
+}
+@media only screen and (max-width: 470px) and (min-width: 400px) {
+    body {
+        font-size: 22.22222px;
+    }
+    .viewport {
+        max-width: 470px;
+    }
+}
+@media only screen and (max-width: 480px) and (min-width: 470px) {
+    body {
+        font-size: 26.11112px;
+    }
+    .viewport {
+        max-width: 480px;
+    }
+}
+@media only screen and (max-width: 540px) and (min-width: 480px) {
+    body {
+        font-size: 26.66666px;
+    }
+    .viewport {
+        max-width: 540px;
+    }
+}
+@media only screen and (max-width: 560px) and (min-width: 540px) {
+    body {
+        font-size: 30px;
+    }
+    .viewport {
+        max-width: 560px;
+    }
+}
+@media only screen and (max-width: 570px) and (min-width: 560px) {
+    body {
+        font-size: 31.11112px;
+    }
+    .viewport {
+        max-width: 570px;
+    }
+}
+@media only screen and (max-width: 630px) and (min-width: 570px) {
+    body {
+        font-size: 31.66666px;
+    }
+    .viewport {
+        max-width: 630px;
+    }
+}
+@media only screen and (max-width: 640px) and (min-width: 630px) {
+    body {
+        font-size: 35px;
+    }
+    .viewport {
+        max-width: 640px;
+    }
+}
+@media only screen and (max-width: 710px) and (min-width: 640px) {
+    body {
+        font-size: 35.55556px;
+    }
+    .viewport {
+        max-width: 710px;
+    }
+}
+@media only screen and (max-width: 720px) and (min-width: 710px) {
+    body {
+        font-size: 39.44444px;
+    }
+    .viewport {
+        max-width: 720px;
+    }
+}
+@media only screen and (min-width: 720px) {
+    body {
+        font-size: 40px;
+    }
+    .viewport {
+        width: 720px;
+    }
+}
+
+/*=================================================================================================================*/
+
+.dialog-footer button:first-child {
+  margin-right: 0.55rem;
+}
+
+.mode-select {
+  margin-bottom: 1.11rem;
+}
+.mode-select:last-child {
+  margin-bottom: 0;
+}
+.mode-select .el-col {
+    border: #efedef;
+    border-style:solid;
+    border-width: 1px;
+    border-radius: 4px;
+    background-color: rgb(231, 239, 248);
+    cursor: pointer;
+}
+.mode-select .mode-name{
+    font-size: 1.22rem;
+    text-align: center;
+    padding: 4.44rem 0 2.77rem 0;
+}
+.mode-select .mode-desc{
+    color: #a0a0a0;
+    padding: 0 0.66rem;
+    margin-bottom: 1.11rem;
+}
+.mode-select .el-col:hover {
+    box-shadow: 0px 12px 32px 4px rgba(0, 0, 0, 0.08), 0px 8px 20px rgba(0, 0, 0, 0.16);
+}
+.main-top{
+    padding: 0.9rem;
+    background-color: #409EFF;
+    font-size: 1.22rem;
+    color: #ffffff;
+}
+.main-top .main-top-mode {
+
+}
+.main-top .main-top-question {
+    text-align: center;
+}
+.main-top .main-top-time {
+    text-align: right;
+}
+
+.main-int{
+    position:absolute;
+    bottom: 1.66rem;
+    width:100%;
+    margin: 0;
+    padding: 0;
+}
+.main-int .main-int-item{
+    margin: 0.55rem;
+    border: #efedef;
+    border-style:solid;
+    border-width: 1px;
+    border-radius: 8px;
+    text-align: center;
+    height: 6.66rem;
+    font-size: 5rem;
+    cursor: pointer;
+}
+
+.main-middle{
+    margin: 4.44rem 0 1.11rem 0;
+    padding: 1.66rem;
+    text-align: center;
+    font-size: 12.2rem;
+}
+
+.answer-btn {
+    font-size: 2.33rem;
+    padding: 3.33rem 4.44rem;
+}
+.dialog-footer button:first-child {
+    margin-right: 0.55rem;
+}
+</style>
+
+<body>
+    <div id="app">
+        <el-row justify="space-between" class="main-top">
+            <el-col :span="8" class="main-top-mode">
+                <div>模式: {{modeType == 0 ? '未选择': modeTypeName[modeType-1]}}</div>
+            </el-col>
+            <el-col :span="8" class="main-top-question">
+                <div>第{{question}}题</div>
+            </el-col>
+            <el-col :span="8" class="main-top-time">
+                <div>计时: {{uesdTime}}</div>
+            </el-col>
+
+        </el-row>
+        <el-row>
+            <el-col :span="1" :offset="22">
+                <el-button type="warning" size="large">排行榜</el-button>
+            </el-col>
+        </el-row>
+
+
+
+        <el-row justify="center" align="middle" class="main-middle">
+            <el-col :span="4" class="main-middle-item">
+                <div>{{a}}</div>
+            </el-col>
+            <el-col :span="4" class="main-middle-item">
+                <div>{{operator}}</div>
+            </el-col>
+            <el-col :span="4" class="main-middle-item">
+                <div>{{b}}</div>
+            </el-col>
+            <el-col :span="4" class="main-middle-item">
+                <div>=</div>
+            </el-col>
+            <el-col :span="4" class="main-middle-item">
+                <div>{{c}}</div>
+            </el-col>
+        </el-row>
+
+
+        <el-row justify="space-evenly" align="middle" style="text-align:center;">
+            <el-col :span="4">
+                <el-button class="answer-btn" @click="reset()">重置</el-button>
+            </el-col>
+            <el-col :span="4">
+                <el-button class="answer-btn" type="success" @click="submit()">确定</el-button>
+            </el-col>
+        </el-row>
+
+
+
+        <el-row justify="space-around" align="middle" class="main-int">
+            <el-col :span="2" class="main-int-item" @click="answer(1)">1</el-col>
+            <el-col :span="2" class="main-int-item" @click="answer(2)">2</el-col>
+            <el-col :span="2" class="main-int-item" @click="answer(3)">3</el-col>
+            <el-col :span="2" class="main-int-item" @click="answer(4)">4</el-col>
+            <el-col :span="2" class="main-int-item" @click="answer(5)">5</el-col>
+            <el-col :span="2" class="main-int-item" @click="answer(6)">6</el-col>
+            <el-col :span="2" class="main-int-item" @click="answer(7)">7</el-col>
+            <el-col :span="2" class="main-int-item" @click="answer(8)">8</el-col>
+            <el-col :span="2" class="main-int-item" @click="answer(9)">9</el-col>
+            <el-col :span="2" class="main-int-item" @click="answer(0)">0</el-col>
+        </el-row>
+
+
+        <el-dialog
+            v-model="centerDialogVisible"
+            title="模式选择"
+            width="80%"
+            align-center
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            :show-close="false"
+        >
+        <el-row justify="space-around" class="mode-select">
+            <el-col :span="4" @click="selectMode(1)">
+                <div class="mode-name">10以内个位</div>
+                <div class="mode-desc">个位数总和10以内的加减法.目的为熟练度练习</div>
+            </el-col>
+            <el-col :span="4" @click="selectMode(2)">
+                <div class="mode-name">凑十法</div>
+                <div class="mode-desc">个位数总和10以内的加减法.目的为熟练度练习</div>
+            </el-col>
+            <el-col :span="4" @click="selectMode(3)">
+                <div class="mode-name">20以内个位加法</div>
+                <div class="mode-desc">个位数总和10以内的加减法.目的为熟练度练习</div>
+            </el-col>
+            <el-col :span="4" @click="selectMode(4)">
+                <div class="mode-name">20以内个位减法</div>
+                <div class="mode-desc">个位数总和10以内的加减法.目的为熟练度练习</div>
+            </el-col>
+            <el-col :span="4" @click="selectMode(5)">
+                <div class="mode-name">20以内减两位</div>
+                <div class="mode-desc">个位数总和10以内的加减法.目的为熟练度练习</div>
+            </el-col>
+        </el-row>
+        </el-dialog>
+
+
+        <el-dialog v-model="centerDialogComplateVisible"
+                   title="恭喜你完成练习"
+                   width="30%"
+                   :close-on-click-modal="false"
+                   :close-on-press-escape="false"
+                   :show-close="false"
+                   center>
+            <div style="padding: 2.22rem; font-size: 1.55rem; text-align: center;">
+                <div style="margin-bottom: 1.4rem;">
+                    恭喜你完成练习
+                </div>
+                <div>
+                    用时: {{uesdTime}}
+                </div>
+            </div>
+            <template #footer>
+              <span class="dialog-footer">
+                <el-button type="primary" @click="dialogComplate()">
+                  结束
+                </el-button>
+              </span>
+            </template>
+        </el-dialog>
+    </div>
+</body>
+
+</html>
+<script>
+    Object.assign(window, Vue);
+    const vue3Composition = {
+        setup() {
+            const data = reactive({
+                exp_id: '',
+                randomScore: false,
+                uesdTime: '00:00:00',
+                numberArray: [2, 5, 1, 8, 7, 3, 4, 6, 9, 0, 4, 1, 7, 9, 6, 2, 5, 3, 8, 3],
+                operatorArray: ['+', '-', '-', '+', '-', '+', '+', '+', '-', '-'],
+                school_id:'',
+                centerDialogVisible: false,
+                centerDialogComplateVisible: false,
+                modeType: 0,
+                modeTypeName: ['10以内个位练习', '凑十练习', '20以内个位加法练习', '20以内个位减法练习', '20以内减两位练习'],
+                a: 0,
+                b: 0,
+                c: '',
+                question: 0,
+                operator: '+',
+            });
+
+            const selectMode = (mode) => {
+                // 设置模式
+                data.modeType = mode;
+                console.log(data.modeType)
+                // 关闭窗口
+                data.centerDialogVisible = false;
+                // 打印数字
+                subjectPrint(mode)
+            }
+
+            const subjectPrint = (mode) => {
+                data.question += 1;
+                var tempA = 0;
+                var tempB = 0;
+                switch(mode){
+                    case 1:
+                        data.operator = data.operatorArray[Math.floor(Math.random()*10)]
+                        tempA = data.numberArray[Math.floor(Math.random()*20)];
+                        do{
+                            if (tempA == 0) {
+                                tempA = data.numberArray[Math.floor(Math.random()*20)];
+                            }
+                            tempB = data.numberArray[Math.floor(Math.random()*20)];
+                        }while (calculation(tempA, tempB) > 10 || calculation(tempA, tempB) < 0)
+                        data.a = tempA;
+                        data.b = tempB;
+                        break;
+                    case 2:
+                        data.operator = '-'
+                        data.b = data.numberArray[Math.floor(Math.random()*20)]
+                        data.a = 10;
+                        break;
+                    case 3:
+                        data.operator = '+'
+                        tempA = Math.floor(Math.random() * (19 - 10 + 1) + 10);
+                        do{
+                            tempB = data.numberArray[Math.floor(Math.random()*20)];
+                        }while (calculation(tempA, tempB) >= 20 )
+                        data.a = tempA;
+                        data.b = tempB;
+                        break;
+                    case 4:
+                        data.operator = '-'
+                        data.a = Math.floor(Math.random() * (19 - 10 + 1) + 10);
+                        data.b = data.numberArray[Math.floor(Math.random()*20)];
+                        break;
+                    case 5:
+                        data.operator = '-'
+                        tempA = Math.floor(Math.random() * (19 - 10 + 1) + 10);
+                        do{
+                            tempB = Math.floor(Math.random() * (19 - 10 + 1) + 10);
+                        }while (calculation(tempA, tempB) < 0 )
+                        data.a = tempA;
+                        data.b = tempB;
+                        break;
+                    default:
+                }
+            }
+
+            const answer = (c) => {
+                if (data.c.length >= 2) {
+                    return;
+                }
+                data.c += "" + c;
+            }
+
+            const reset = () => {
+                data.c = ''
+            }
+
+            const dialogComplate = () => {
+                location.reload();
+            }
+
+            const submit = () => {
+                if (calculation(data.a, data.b) != data.c) {
+                    // 答错了
+                    ElementPlus.ElMessage.error('答错啦!')
+                    data.c = ''
+                    return;
+                }
+                if (data.question >= 20) {
+                    data.centerDialogComplateVisible = true;
+                    return;
+                }
+                // 打印数字
+                subjectPrint(data.modeType);
+                data.c = ''
+            }
+
+            const calculation = (a, b) => {
+                switch (data.operator) {
+                    case '+':
+                        return a + b;
+                    case '-':
+                        return a - b;
+                }
+                return 0;
+            }
+
+            /**
+             * @name: 将data绑定值dataRef
+             * @author: camellia
+             * @email: guanchao_gc@qq.com
+             * @date: 2021-01-10
+             */
+            const dataRef = toRefs(data);
+
+            /**
+             * 启动
+             */
+            onMounted(() => {
+                // 选择练习模式
+                data.centerDialogVisible = true;
+                console.log(111)
+            });
+
+            return {
+                selectMode,
+                answer,
+                reset,
+                submit,
+                dialogComplate,
+                ...dataRef
+            }
+        },
+    }
+    const app = createApp(vue3Composition).use(ElementPlus).mount("#app");
+</script>
