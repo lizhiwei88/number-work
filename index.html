@@ -457,7 +457,6 @@ body {
                 uesdTime: '00:00:00',
                 numberArray: [2, 5, 1, 8, 7, 3, 4, 6, 9, 0, 4, 1, 7, 9, 6, 2, 5, 3, 8, 3],
                 operatorArray: ['+', '-', '-', '+', '-', '+', '+', '+', '-', '-'],
-                school_id:'',
                 centerDialogVisible: false,
                 centerDialogComplateVisible: false,
                 modeType: 0,
@@ -467,6 +466,7 @@ body {
                 c: '',
                 question: 0,
                 operator: '+',
+                interval: null,
             });
 
             const selectMode = (mode) => {
@@ -477,6 +477,9 @@ body {
                 data.centerDialogVisible = false;
                 // 打印数字
                 subjectPrint(mode)
+                // 计时
+                const start = new Date();
+                data.interval = setInterval(function(){timer(start)}, 1000);
             }
 
             const subjectPrint = (mode) => {
@@ -528,6 +531,14 @@ body {
                 }
             }
 
+            const timer = (start) => {
+                var now = new Date();
+                var det = now - start;
+                now.setTime(det);
+                now.setHours(0);
+                data.uesdTime = now.toLocaleTimeString();
+            }
+
             const answer = (c) => {
                 if (data.c.length >= 2) {
                     return;
@@ -552,6 +563,7 @@ body {
                 }
                 if (data.question >= 20) {
                     data.centerDialogComplateVisible = true;
+                    clearInterval(data.interval)
                     return;
                 }
                 // 打印数字
