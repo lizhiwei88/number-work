@@ -401,7 +401,7 @@ body {
                 <div class="mode-desc">个位数总和10以内的加减法.目的为熟练度练习</div>
             </el-col>
             <el-col :span="4" @click="selectMode(2)">
-                <div class="mode-name">凑十法</div>
+                <div class="mode-name">个位加法</div>
                 <div class="mode-desc">个位数总和10以内的加减法.目的为熟练度练习</div>
             </el-col>
             <el-col :span="4" @click="selectMode(3)">
@@ -434,6 +434,9 @@ body {
                 <div>
                     用时: {{uesdTime}}
                 </div>
+                <div>
+                    答错了 {{errorNumber}} 次
+                </div>
             </div>
             <template #footer>
               <span class="dialog-footer">
@@ -460,13 +463,14 @@ body {
                 centerDialogVisible: false,
                 centerDialogComplateVisible: false,
                 modeType: 0,
-                modeTypeName: ['10以内个位练习', '凑十练习', '20以内个位加法练习', '20以内个位减法练习', '20以内减两位练习'],
+                modeTypeName: ['10以内个位练习', '个位加法', '20以内个位加法练习', '20以内个位减法练习', '20以内减两位练习'],
                 a: 0,
                 b: 0,
                 c: '',
                 question: 0,
                 operator: '+',
                 interval: null,
+                errorNumber: 0,
             });
 
             const selectMode = (mode) => {
@@ -500,9 +504,16 @@ body {
                         data.b = tempB;
                         break;
                     case 2:
-                        data.operator = '-'
-                        data.b = data.numberArray[Math.floor(Math.random()*20)]
-                        data.a = 10;
+                        data.operator = '+'
+                        tempA = data.numberArray[Math.floor(Math.random()*20)];
+                        do{
+                            if (tempA == 0 || tempA == 1) {
+                                tempA = data.numberArray[Math.floor(Math.random()*20)];
+                            }
+                            tempB = data.numberArray[Math.floor(Math.random()*20)];
+                        }while (calculation(tempA, tempB) < 10)
+                        data.a = tempA;
+                        data.b = tempB;
                         break;
                     case 3:
                         data.operator = '+'
@@ -553,12 +564,27 @@ body {
             }
 
             const dialogComplate = () => {
-                location.reload();
+                data.randomScore = false
+                data.uesdTime = '00:00:00'
+                data.centerDialogVisible = false
+                data.centerDialogComplateVisible = false
+                data.modeType = 0
+                data.a = 0
+                data.b = 0
+                data.c = ''
+                data.question = 0
+                data.operator = '+'
+                data.interval = null
+                data.errorNumber = 0
+                data.centerDialogVisible = true;
+                // location.reload();
             }
 
             const submit = () => {
                 if (calculation(data.a, data.b) != data.c) {
                     // 答错了
+                    data.errorNumber++;
+                    console.log(data.errorNumber)
                     ElementPlus.ElMessage.error('答错啦!')
                     data.c = ''
                     return;
